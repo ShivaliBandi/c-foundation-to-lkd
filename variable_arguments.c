@@ -2,7 +2,8 @@
 #include<stdarg.h>
 int iMaximum(int icount,...)
 {
-    
+    if(icount==0)
+        return 0;
     va_list list;
     va_start(list,icount);
     int iMax=va_arg(list,int);
@@ -17,6 +18,6 @@ int iMaximum(int icount,...)
 }
 int main()
 {
-    printf("iMax=%d\n",iMaximum(5,100,23,5432,2,332));
+    printf("iMax=%d\n",iMaximum(0));
     return 0;
 }
