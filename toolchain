@@ -1,0 +1,299 @@
+gcc -E hello.c -o hello.i
+this -E tell computer compile c program and stop after pre processing .i (intermediate file)
+What does the preprocessor do?
+
+Everything we've studied today happens here.
+
+It performs:
+
+✅ #include
+✅ #define
+✅ Macro expansion
+✅ #ifdef
+✅ #ifndef
+✅ #if
+✅ #elif
+✅ #else
+✅ defined()
+✅ Removes comments
+
+This is why I wanted you to study the preprocessor first.
+
+
+
+---------------------------------------------
+Stage 2 — Compiler
+
+Input
+
+hello.i
+
+Output
+
+hello.s
+
+Command
+
+gcc -S hello.c
+What are the major phases inside the compiler?
+
+Answer:
+
+Lexical Analysis
+Syntax Analysis
+Semantic Analysis
+Optimization
+Code Generation
+This generates assembly code.
+
+The compiler:
+
+Checks syntax
+Performs type checking
+Optimizes (depending on optimization flags)
+Converts C into assembly
+Stage 3 — Assembler
+
+Input
+
+hello.s
+
+Output
+
+hello.o
+
+Command
+
+gcc -c hello.c
+
+The assembler converts assembly instructions into machine code and produces an object file (.o).
+
+Stage 4 — Linker
+
+Input
+
+hello.o
+
+Output
+
+a.out
+
+The linker:
+
+Combines your object files.
+Links library functions like printf.
+Resolves symbols (functions and global variables).
+Produces the final executable.
+
+We'll study linking in depth later.
+
+⭐ Easy Way to Remember
+Source Code
+    │
+    ▼
+Preprocessor
+    │
+    ▼
+Compiler
+    │
+    ▼
+Assembler
+    │
+    ▼
+Linker
+
+Or even shorter:
+
+Preprocessor → Compiler → Assembler → Linker
+
+📝 Notes (Add to Markdown)
+# Compilation Pipeline
+
+Input:
+hello.c
+
+1. Preprocessor
+- Expands macros
+- Processes #include
+- Processes conditional compilation
+- Removes comments
+Output: hello.i
+
+2. Compiler
+- Syntax checking
+- Type checking
+- Optimization
+- Converts C to Assembly
+Output: hello.s
+
+3. Assembler
+- Converts Assembly to Machine Code
+Output: hello.o
+
+4. Linker
+- Combines object files
+- Resolves external symbols
+- Links libraries
+Output: Executable (a.out)
+
+
+--------------------------------------------------------------
+
+The compilation stages are the same. What changes is the compiler, assembler, linker, and object file format, not the intermediate file extensions.
+
+Let's compare.
+
+Stage	    Linux (GCC/Clang)	Windows (GCC/MinGW)	    Windows (MSVC)	            macOS (Clang)
+Source	        .c	                    .c	                .c	                         .c
+Preprocessor	.i	                    .i              	.i (or internal)	         .i
+Compiler	    .s	                    .s	                .asm (usually)	             .s
+Assembler   	.o	                    .o (MinGW)	        .obj	                     .o
+Linker      	a.out or executable	    .exe	            .exe                   a.out or executable
+
+
+
+Another Important Difference
+
+The object file format changes with the operating system.
+
+OS	Object File Format
+Linux	ELF (Executable and Linkable Format)
+Windows	COFF / PE 
+macOS	Mach-O
+
+
+
+1. ELF
+
+Full Form:
+
+Executable and Linkable Format
+
+This is the standard binary file format used by Linux and most Unix-like operating systems.
+
+ELF is used for:
+
+Executables
+Object files (.o)
+Shared libraries (.so)
+Core dump files
+
+Examples:
+
+hello.o
+libpthread.so
+a.out
+core
+
+All of these are ELF files on Linux.
+
+2. PE
+
+Full Form:
+
+Portable Executable
+
+Used by:
+
+Windows executables (.exe)
+Windows DLLs (.dll)
+
+Examples:
+
+notepad.exe
+kernel32.dll
+
+PE is the Windows executable format.
+
+3. COFF
+
+Full Form:
+
+Common Object File Format
+
+Originally developed by AT&T.
+
+Used for object files.
+
+Microsoft later extended COFF into PE/COFF.
+
+MSVC object files (.obj) use COFF.
+
+4. Mach-O
+
+Full Form:
+
+Mach Object
+
+Used by:
+
+macOS
+iOS
+
+Examples:
+
+Safari
+Terminal
+libSystem.dylib
+
+All are Mach-O binaries.
+
+Easy Interview Table
+OS	Binary Format	Full Form
+Linux	ELF	Executable and Linkable Format
+Windows	PE	Portable Executable
+Windows Object Files	COFF	Common Object File Format
+macOS	Mach-O	Mach Object
+⭐ Interview Question
+
+Interviewer:
+
+What is an ELF file?
+
+Good answer:
+
+ELF stands for Executable and Linkable Format. It is the standard binary format used by Linux for executables, object files, shared libraries, and core dumps. It contains sections such as .text, .data, .bss, symbol tables, relocation information, and metadata required by the linker and loader.
+
+⭐⭐⭐⭐⭐
+
+Another Interview Question
+
+Interviewer:
+
+Why is it called "Linkable" Format?
+
+Because ELF is not only for executables.
+
+The linker also works with:
+
+main.o
+utils.o
+network.o
+
+These are linkable object files.
+
+The linker combines them into:
+
+app
+
+So ELF supports both:
+
+Linkable files (.o)
+Executable files
+
+Hence the name:
+
+Executable and Linkable Format
+
+📝 Notes
+ELF  = Executable and Linkable Format
+PE   = Portable Executable
+COFF = Common Object File Format
+Mach-O = Mach Object
+
+Linux  -> ELF
+Windows -> PE / COFF
+macOS -> Mach-O
+📌 Small Interview Tip
+
+When we study ELF in detail later (using readelf, objdump, and nm), you'll understand why .text, .data, .bss, symbol tables, relocation tables, dynamic sections, and program headers exist. That topic is one of the highest-yield Linux System Programming interview topics, and we'll cover it thoroughly after finishing the compilation pipeline.
