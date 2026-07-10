@@ -4,6 +4,7 @@ int main()
 	int *iArr=NULL,imax=0,isize=0;
     printf("enter size of array you want to allocate\n");
     scanf("%d",&isize);
+    
     iArr=malloc(sizeof(int)*isize);
 	for(int inum=0;inum<isize;inum++)
 	{
@@ -33,8 +34,18 @@ int main()
     //     }
     //    start++;
     // }
-    
 
+    while(start<isize)
+    {
+        if(iArr[start]!=0)
+        {
+            int temp=iArr[start];
+            iArr[start]=iArr[end];
+            iArr[end]=temp;
+            end++;
+        }
+        start++;
+    }
 
     for(int i=0;i<isize;i++)
         printf("%d\n",iArr[i]);
