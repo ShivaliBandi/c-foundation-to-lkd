@@ -16,7 +16,11 @@ int *intersect_elements(int arr[], int m, int brr[], int n, int *intersectionSiz
 {
     int i = 0, j = 0;
 
-    int *result = malloc(sizeof(int) * (m + n));
+    int *result = NULL;
+    if(m>n)
+        result=malloc(sizeof(int)*m);
+    else 
+        result=malloc(sizeof(int)*n);
     if (result == NULL)
         return NULL;
 
@@ -36,7 +40,6 @@ int *intersect_elements(int arr[], int m, int brr[], int n, int *intersectionSiz
         {
             result[*intersectionSize] = arr[i];
             (*intersectionSize)++;
-            
             i++;
             j++;
         }
