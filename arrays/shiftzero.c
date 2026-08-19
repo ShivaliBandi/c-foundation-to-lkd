@@ -18,7 +18,7 @@ int main()
     for(int i=0;i<isize;i++)
         printf("%d\n",iArr[i]);
     printf("\n\n--------------------------------------\n\n");
-    int start=0,end=0;
+    int start=0,end=isize-1;
 	// while(end<isize && start!=isize)
     // {
     //     if(iArr[start]==0)
@@ -35,16 +35,33 @@ int main()
     //    start++;
     // }
 
-    while(start<isize)
+    // while(start<isize)
+    // {
+    //     if(iArr[start]!=0)
+    //     {
+    //         int temp=iArr[start];
+    //         iArr[start]=iArr[end];
+    //         iArr[end]=temp;
+    //         end++;
+    //     }
+    //     start++;
+    // } for maintaining sequence 
+
+
+    //if sequence is not imp
+    while(start<end)
     {
         if(iArr[start]!=0)
+            start++;
+        else if(iArr[end]==0)
+            end--;
+        else
         {
-            int temp=iArr[start];
             iArr[start]=iArr[end];
-            iArr[end]=temp;
-            end++;
+            iArr[end]=0;
+            end--;
         }
-        start++;
+
     }
 
     for(int i=0;i<isize;i++)
