@@ -1,24 +1,46 @@
 #include"header.h"
 #define SIZE 5
+// int *twoSum(int *arr,int isum)
+// {
+//     int *output=NULL;
+//     output=malloc(sizeof(int)*2);
+//     for(int i=0;i<SIZE-1;i++)
+//     {
+//         for(int j=i+1;j<SIZE;j++)
+//         {
+//             if(arr[i]+arr[j]==isum)
+//             {
+//                 output[0]=i;
+//                 output[1]=j;
+//                 return output;
+//             }
+//         }
+//     }
+//     free(output);
+//     return NULL;
+
+// }
 int *twoSum(int *arr,int isum)
 {
-    int *output=NULL;
-    output=malloc(sizeof(int)*2);
-    for(int i=0;i<SIZE-1;i++)
+    int *iret;
+    iret=malloc(2*sizeof(int));
+    int istart=0,iend=SIZE-1;
+    while(istart<iend)
     {
-        for(int j=i+1;j<SIZE;j++)
+        if((arr[istart]+arr[iend])<isum)
+            istart++;
+        else if((arr[istart]+arr[iend])>isum)
+            iend--;
+        else
         {
-            if(arr[i]+arr[j]==isum)
-            {
-                output[0]=i;
-                output[1]=j;
-                return output;
-            }
+            iret[0]=istart;
+            iret[1]=iend;
+            return iret;
         }
+    
     }
-    free(output);
+    free(iret);
     return NULL;
-
 }
 int main()
 {
