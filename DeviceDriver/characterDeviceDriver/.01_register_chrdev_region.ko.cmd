@@ -1,0 +1,1 @@
+savedcmd_01_register_chrdev_region.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T /usr/src/linux-headers-7.0.0-29-generic/scripts/module.lds -o 01_register_chrdev_region.ko 01_register_chrdev_region.o 01_register_chrdev_region.mod.o .module-common.o
