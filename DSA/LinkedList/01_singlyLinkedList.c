@@ -130,6 +130,15 @@ void displayLinkedlist(struct Node *head)
         printf("NULL\n");
     }
 }
+bool deleteFirst(struct Node** head)
+{
+    if(head==NULL)
+    {
+        printf("Linkedlist is empty\n");
+        return false;
+        
+    }
+}
 int main()
 {
     struct Node *head=NULL;
