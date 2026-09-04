@@ -77,29 +77,28 @@ bool insertLast(struct Node **head,int data)
         return true;
     }
 }
+
 bool insertAt(struct Node** head,int ipos,int data)
 {
    
-    if(newnode==NULL)
-    {
-        perror("ERROR:");
-        return false;
-    }
-    if(*head==NULL)
-    {
-        *head=newnode;
-        return true;
-    }
+   
+    
     int icount=count(*head);
-    if ((ipos>0) && (ipos<=icount))
+    if ((ipos>0) && (ipos<=(icount+1)))
     {
+        
         if(ipos==1)
             insertFirst(head,data);
-        else if(ipos==icount)
+        else if(ipos==(icount+1))
             insertLast(head,data);
         else
         {
             struct Node* newnode=createNode(data);
+            if(newnode==NULL)
+            {
+                perror("ERROR:");
+                return false;
+            }
             struct Node *temp=*head;
             while(ipos!=2)
             {
@@ -112,7 +111,7 @@ bool insertAt(struct Node** head,int ipos,int data)
             return true;
         }
     }
-    
+    return false;
     
 }
 
@@ -132,12 +131,86 @@ void displayLinkedlist(struct Node *head)
 }
 bool deleteFirst(struct Node** head)
 {
-    if(head==NULL)
+    if(*head==NULL)
     {
         printf("Linkedlist is empty\n");
         return false;
+    }
+    else
+    {
+        struct Node *temp=*head;
+        (*head)=(*head)->next;
+        free(temp);
+        return true;
+    }
+}
+bool deleteLast(struct Node **head)
+{
+    if(*head==NULL)
+    {
+        printf("Linkedlist is empty\n");
+        return false;
+    }
+    else if((*head)->next==NULL)
+    {
+        free((*head));
+        *head=NULL;
+    }
+    
+    else
+    {
+        struct Node *temp=*head;
+        while (temp->next->next!=NULL)
+        {
+            temp=temp->next;
+        }
+        struct Node *cur=temp;
+        cur=cur->next;
+        temp->next=NULL;
+        free(cur);
+        
         
     }
+    return true;
+}
+
+bool deleteAt(struct Node **head, int ipos)
+{
+    
+     
+        int icnt= count(*head);
+
+        if(ipos>0 && ipos<=icnt)
+        {
+            if(((*head)==NULL))
+            {
+                printf("Linkedlist is empty");
+                return false;
+            }
+            if(ipos==1)
+                deleteFirst(head);
+            else if(ipos==icnt)
+                deleteLast(head);
+            else
+            {
+                struct Node* curr=(*head);
+                struct Node* temp=(*head);
+                while(ipos!=2)
+                {
+                    curr=curr->next;
+                    ipos--;
+                }
+                temp=curr->next;
+                curr->next=temp->next;
+                free(temp);
+                return true;
+            }
+           
+        }
+
+        
+    
+    return false;
 }
 int main()
 {
@@ -177,20 +250,41 @@ int main()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-returnValue=insertAt(&head,3,600);
-    if(!returnValue==false)
-        printf("value intserted successfully\n");
+    returnValue=insertAt(&head,3,600);
+        if(!returnValue==false)
+            printf("value intserted successfully\n");
+        
+        returnValue=insertAt(&head,4,700);
+        if(!returnValue==false)
+            printf("value intserted successfully\n");
     
-    returnValue=insertAt(&head,4,700);
-    if(!returnValue==false)
-        printf("value intserted successfully\n");
-    
-    returnValue=insertAt(&head,count(head),800);
+    returnValue=insertAt(&head,count(head)+1,800);
     if(!returnValue==false)
         printf("value intserted successfully\n");
     displayLinkedlist(head);
+//////////////////////////////////////////////////////////////////////////////////////////////////
+    //delete first
+    returnValue=deleteFirst(&head);
+    displayLinkedlist(head);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
+    returnValue=deleteLast(&head);
+    displayLinkedlist(head);
+//////////////////////////////////////////////////////////////////////////////////////////////////
+    returnValue=deleteAt(&head,1);
+    displayLinkedlist(head);
+     returnValue=deleteAt(&head,count(head));
+    displayLinkedlist(head);
+     returnValue=deleteAt(&head,0);
+    displayLinkedlist(head);
+     returnValue=deleteAt(&head,5);
+    displayLinkedlist(head);
+     returnValue=deleteAt(&head,10);
+    displayLinkedlist(head);
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
     struct Node *temp = head;
     struct Node *next;
     while (temp != NULL)
