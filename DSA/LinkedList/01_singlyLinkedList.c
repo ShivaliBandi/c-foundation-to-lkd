@@ -88,9 +88,9 @@ bool insertAt(struct Node** head,int ipos,int data)
     {
         
         if(ipos==1)
-            insertFirst(head,data);
+            return insertFirst(head,data);
         else if(ipos==(icount+1))
-            insertLast(head,data);
+            return insertLast(head,data);
         else
         {
             struct Node* newnode=createNode(data);
@@ -188,9 +188,9 @@ bool deleteAt(struct Node **head, int ipos)
                 return false;
             }
             if(ipos==1)
-                deleteFirst(head);
+                return deleteFirst(head);
             else if(ipos==icnt)
-                deleteLast(head);
+                return deleteLast(head);
             else
             {
                 struct Node* curr=(*head);
@@ -212,6 +212,49 @@ bool deleteAt(struct Node **head, int ipos)
     
     return false;
 }
+
+int search(struct Node *head, int data)
+{   int icount=1;
+    if(head==NULL)
+    {
+        printf("Linkedlist is empty\n");
+        return -1;
+    }
+
+    while(head!=NULL)
+    {
+        if(head->data==data)
+            return icount;
+        head=head->next;
+        icount++;
+
+    }
+    return -1;
+}
+
+int middleOfList(struct Node *head)
+{
+    if(head==NULL)
+        return -1;
+    else
+    {
+        struct Node* slowptr=head;
+        struct Node* fastptr=head;
+        while(fastptr != NULL && fastptr->next != NULL)
+        {
+            slowptr=slowptr->next;
+            fastptr=fastptr->next->next;
+        }
+        return slowptr->data;
+    }
+    return -1;
+    
+}
+
+
+
+
+
 int main()
 {
     struct Node *head=NULL;
@@ -284,7 +327,25 @@ int main()
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
+//search logic
+    printf("SEARCH\n"); 
+    displayLinkedlist(head);
+    int data=800;
+    int searchValue=search(head,data);
+    if(searchValue==-1)
+        printf("Value is not present in linkedlist\n");
+    else
+        printf("Data(%d) is present at %d node\n",data,searchValue);
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+    printf("MIDDLE OF LINKEDLIST\n");
+    data=middleOfList(head);
+    if(data==-1)
+        printf("linkedlist is empty\n");
+    else
+        printf("middle of linkedlist is %d\n",data);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
     struct Node *temp = head;
     struct Node *next;
     while (temp != NULL)

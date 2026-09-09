@@ -1,6 +1,12 @@
 #include"header.h"
 void  reverseString(char *str)
 {
+    if(str==NULL || (strlen(str)==0))
+    {
+        printf("String is empty\n");
+        return;
+    }
+        
     char *start=str,*end=str+(strlen(str)-1),temp;
     while(start<end)
     {
