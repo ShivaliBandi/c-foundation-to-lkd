@@ -49,6 +49,8 @@ void increment()
     for(int i=0;i<100000;i++)
     {
         counter.fetch_add(1,memory_order_relaxed);
+        //You could also write counter++ because incrementing an atomic integer is an atomic read-modify-write operation..
+        //we used fetch_add for practice or hands on
     }
 }
 int main()
